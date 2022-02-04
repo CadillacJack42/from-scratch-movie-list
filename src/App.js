@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import MovieForm from './MovieForm';
 import MovieList from './MovieList';
+import Preview from './Preview';
 
 function App() {
   const [allMovies, setAllMovies] = useState([]);
@@ -11,10 +12,13 @@ function App() {
   const [bgColor, setBgColor] = useState('blue');
   return (
     <div className="App">
-      <p>{movieTitle}</p>
-      <p>{director}</p>
-      <p>{releaseDate}</p>
-      <p>{bgColor}</p>
+      <Preview 
+        title={movieTitle}
+        director={director}
+        releaseDate={releaseDate}
+        bgColor={bgColor}
+      />
+      
       <MovieForm 
         setAllMovies={setAllMovies}
         allMovies={allMovies}
