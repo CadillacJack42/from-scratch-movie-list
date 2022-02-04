@@ -13,6 +13,8 @@ function App() {
   const [filterQuery, setFilterQuery] = useState('');
   const [filteredMovieList, setFilteredMovieList] = useState([]);
 
+
+  // USEEFFECT IS HANDLEFILTERMOVIE FUNCTION IN RUBRIC
   useEffect(() => {
     if (filterQuery) {
       const filteredMovies = allMovies.filter(movie => movie.title.includes(filterQuery));
@@ -64,7 +66,6 @@ function App() {
         releaseDate={releaseDate}
         setBgColor={setBgColor}
         handleSubmit={handleSubmit}
-        resetForm={resetForm}
       />
 
       <label>
