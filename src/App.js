@@ -10,6 +10,33 @@ function App() {
   const [director, setDirector] = useState('');
   const [releaseDate, setReleaseDate] = useState('');
   const [bgColor, setBgColor] = useState('blue');
+
+  const resetForm = () => {
+    setBgColor('blue');
+    setReleaseDate('');
+    setDirector('');
+    setMovieTitle('');
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newMovie = {
+      id: allMovies.length + 1,
+      title: movieTitle,
+      director: director,
+      releaseDate: releaseDate,
+      bgColor: bgColor,
+    };
+    setAllMovies([...allMovies, newMovie]);
+    resetForm();
+  };
+
+  const handleDeleteMovie = (id) => {
+    const movieIndex = allMovies.findIndex(movie => movie.id === id);
+    allMovies.splice(movieIndex, 1);
+    setAllMovies([...allMovies]);
+  };
+
   return (
     <div className="App">
       <Preview 
@@ -20,8 +47,6 @@ function App() {
       />
       
       <MovieForm 
-        setAllMovies={setAllMovies}
-        allMovies={allMovies}
         setMovieTitle={setMovieTitle}
         movieTitle={movieTitle}
         setDirector={setDirector}
@@ -29,17 +54,13 @@ function App() {
         setReleaseDate={setReleaseDate}
         releaseDate={releaseDate}
         setBgColor={setBgColor}
-        bgColor={bgColor}
+        handleSubmit={handleSubmit}
+        resetForm={resetForm}
       />
-      {/* {allMovies.map((movie, i) => {
-        return <p className='movie' style={{ backgroundColor: movie.bgColor }} key={movie.title + i}>
-          {movie.title} <br></br>
-          {movie.director} <br></br>
-          {movie.releaseDate} <br></br>
-        </p>;
-      })} */}
+
       <MovieList 
         allMovies={allMovies}
+        handleDeleteMovie={handleDeleteMovie}
       />
     </div>
   );

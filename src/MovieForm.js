@@ -1,8 +1,6 @@
 import React from 'react';
 
 export default function MovieForm({
-  setAllMovies,
-  allMovies,
   setMovieTitle,
   movieTitle,
   setDirector,
@@ -10,7 +8,7 @@ export default function MovieForm({
   setReleaseDate,
   releaseDate,
   setBgColor,
-  bgColor,
+  handleSubmit,
 }) {
   const handleTitleChange = (e) => {
     setMovieTitle(e.target.value);
@@ -24,24 +22,8 @@ export default function MovieForm({
   const handleColorChange = (e) => {
     setBgColor(e.target.value);
   };
-  const resetForm = () => {
-    setBgColor('blue');
-    setReleaseDate('');
-    setDirector('');
-    setMovieTitle('');
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newMovie = {
-      id: allMovies.length + 1,
-      title: movieTitle,
-      director: director,
-      releaseDate: releaseDate,
-      bgColor: bgColor,
-    };
-    setAllMovies([...allMovies, newMovie]);
-    resetForm();
-  };
+
+
   return <div>
     <form onSubmit={handleSubmit}>
       <label>
