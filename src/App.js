@@ -1,23 +1,82 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import MovieForm from './MovieForm';
+import MovieList from './MovieList';
+import Preview from './Preview';
 
 function App() {
+  const [allMovies, setAllMovies] = useState([]);
+  const [movieTitle, setMovieTitle] = useState('');
+  const [director, setDirector] = useState('');
+  const [releaseDate, setReleaseDate] = useState('');
+  const [bgColor, setBgColor] = useState('blue');
+  const [filterQuery, setFilterQuery] = useState('');
+  const [filteredMovieList, setFilteredMovieList] = useState([]);
+
+
+  // USEEFFECT IS HANDLEFILTERMOVIE FUNCTION IN RUBRIC
+  useEffect(() => {
+    if (filterQuery) {
+      const filteredMovies = allMovies.filter(movie => movie.title.includes(filterQuery));
+      setFilteredMovieList(filteredMovies);
+    } else setFilteredMovieList([...allMovies]);
+  }, [filterQuery, allMovies]);
+    
+  const resetForm = () => {
+    setBgColor('blue');
+    setReleaseDate('');
+    setDirector('');
+    setMovieTitle('');
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newMovie = {
+      id: allMovies.length + 1,
+      title: movieTitle,
+      director: director,
+      releaseDate: releaseDate,
+      bgColor: bgColor,
+    };
+    setAllMovies([...allMovies, newMovie]);
+    resetForm();
+  };
+
+  const handleDeleteMovie = (id) => {
+    const movieIndex = allMovies.findIndex(movie => movie.id === id);
+    allMovies.splice(movieIndex, 1);
+    setAllMovies([...allMovies]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Preview 
+        title={movieTitle}
+        director={director}
+        releaseDate={releaseDate}
+        bgColor={bgColor}
+      />
+      
+      <MovieForm 
+        setMovieTitle={setMovieTitle}
+        movieTitle={movieTitle}
+        setDirector={setDirector}
+        director={director}
+        setReleaseDate={setReleaseDate}
+        releaseDate={releaseDate}
+        setBgColor={setBgColor}
+        handleSubmit={handleSubmit}
+      />
+
+      <label>
+        Filter by Title
+        <input onChange={(e) => setFilterQuery(e.target.value)}></input>
+      </label>
+
+      <MovieList 
+        allMovies={filteredMovieList.length ? filteredMovieList : allMovies}
+        handleDeleteMovie={handleDeleteMovie}
+      />
     </div>
   );
 }
