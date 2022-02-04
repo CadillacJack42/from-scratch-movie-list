@@ -8,7 +8,7 @@ export default function Movie({
   bgColor,
   handleDelete,
 }) {
-  return <div className='movie' onClick={() => handleDelete(id)} style={{ backgroundColor: bgColor }}>
+  return <div className='movie' onClick={() => handleDelete && handleDelete(id)} style={{ backgroundColor: bgColor }}>
     <h2>{title}</h2>
     <p>
         Directed By: {director}<br></br>

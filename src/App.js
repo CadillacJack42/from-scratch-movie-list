@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import MovieForm from './MovieForm';
 import MovieList from './MovieList';
@@ -10,7 +10,16 @@ function App() {
   const [director, setDirector] = useState('');
   const [releaseDate, setReleaseDate] = useState('');
   const [bgColor, setBgColor] = useState('blue');
+  const [filterQuery, setFilterQuery] = useState('');
+  const [filteredMovieList, setFilteredMovieList] = useState([]);
 
+  useEffect(() => {
+    if (filterQuery) {
+      const filteredMovies = allMovies.filter(movie => movie.title.includes(filterQuery));
+      setFilteredMovieList(filteredMovies);
+    } else setFilteredMovieList([...allMovies]);
+  }, [filterQuery, allMovies]);
+    
   const resetForm = () => {
     setBgColor('blue');
     setReleaseDate('');
@@ -58,8 +67,13 @@ function App() {
         resetForm={resetForm}
       />
 
+      <label>
+        Filter by Title
+        <input onChange={(e) => setFilterQuery(e.target.value)}></input>
+      </label>
+
       <MovieList 
-        allMovies={allMovies}
+        allMovies={filteredMovieList.length ? filteredMovieList : allMovies}
         handleDeleteMovie={handleDeleteMovie}
       />
     </div>
