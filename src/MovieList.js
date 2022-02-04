@@ -2,7 +2,7 @@ import React from 'react';
 import Movie from './Movie';
 
 export default function MovieList({ allMovies }) {
-  return <div>
+  return <div className='movie-list'>
     {allMovies.map((movie, i) => {
       return (
         <Movie 
