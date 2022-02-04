@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import MovieForm from './MovieForm';
+import MovieList from './MovieList';
 
 function App() {
   const [allMovies, setAllMovies] = useState([]);
@@ -26,13 +27,16 @@ function App() {
         setBgColor={setBgColor}
         bgColor={bgColor}
       />
-      {allMovies.map((movie, i) => {
+      {/* {allMovies.map((movie, i) => {
         return <p className='movie' style={{ backgroundColor: movie.bgColor }} key={movie.title + i}>
           {movie.title} <br></br>
           {movie.director} <br></br>
           {movie.releaseDate} <br></br>
         </p>;
-      })}
+      })} */}
+      <MovieList 
+        allMovies={allMovies}
+      />
     </div>
   );
 }
